@@ -28,8 +28,8 @@ class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
-        $logo = asset('storage/' . app(GeneralSettings::class)->logo);
-        $name_site = app(GeneralSettings::class)->site_name_en;
+        // $logo = asset('storage/' . app(GeneralSettings::class)->logo);
+        // $name_site = app(GeneralSettings::class)->site_name_en;
 
         return $panel
             ->default()
@@ -63,14 +63,16 @@ class AdminPanelProvider extends PanelProvider
             //     return app(GeneralSettings::class)->$property;
             // })
 
-              ->brandName($name_site ?? 'Hotelify')
+               ->brandName( 'Hotelify')
 
             //  ->brandLogo(fn () => view('filament.admin.logo'))
             // ->brandLogo(fn() => view('filament.admin.logoDark'))
-            ->brandLogo($logo ?? asset('hotel.png'))
+            ->darkModeBrandLogo(asset('hotel.png'))
+            ->brandLogo(asset('logo_w.webp'))
             ->brandLogoHeight('3rem')
 
-            ->favicon(asset('storage/' . app(GeneralSettings::class)->favicon))
+
+            // ->favicon(asset('storage/' . app(GeneralSettings::class)->favicon))
             ->sidebarCollapsibleOnDesktop()
             ->databaseNotifications(true)
             ->databaseNotificationsPolling('80s')

@@ -15,11 +15,17 @@ return new class extends Migration
             $table->id();
             $table->string('booking_number')->unique(); // رقم الحجز
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('room_id')->constrained()->onDelete('cascade');
+            $table->foreignId('room_id')->nullable()->constrained()->onDelete('set null');
             $table->date('start_date');
             $table->date('end_date');
             $table->decimal('total_price', 8, 2)->nullable(); // هيتحسب تلقائيًا
             $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending'); // حالة الحجز
+
+            $table->string('room_type')->nullable(); // نوع الغرفة
+            $table->string('room_number')->nullable(); // رقم الغرفة
+            $table->string('customer_name')->nullable(); // اسم العميل
+            $table->string('customer_email')->nullable(); // رقم تليفون العميل
+
             $table->timestamps();
         });
     }

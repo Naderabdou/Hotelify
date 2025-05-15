@@ -17,6 +17,11 @@ class Booking extends Model
         'end_date',
         'total_price',
         'status',
+        'room_type',
+        'room_number',
+        'customer_name',
+        'customer_email',
+
     ];
 
     public function user()

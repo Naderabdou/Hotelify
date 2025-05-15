@@ -69,18 +69,36 @@ class OrderResource extends Resource
                     ->label(__('Booking Number')),
 
 
-                TextColumn::make('user.name')
+                TextColumn::make('customer_name')
                     ->default('NA')
                     ->label(__('user name')),
 
 
-                TextColumn::make('user.email')
+                TextColumn::make('customer_email')
                     ->default('NA')
                     ->label(__('email')),
 
-                TextColumn::make('room.number')
+                TextColumn::make('room_number')
                     ->default('NA')
                     ->label(__('Room Number')),
+                TextColumn::make('room_type')
+                    ->default('NA')
+                    ->badge()
+                    ->color(function (string $state): string {
+                        return match ($state) {
+                            'single' => 'success',
+                            'double' => 'primary',
+                            'suite' => 'warning',
+                        };
+                    })
+                    ->formatStateUsing(function (string $state): string {
+                        return match ($state) {
+                            'single' => __('Single'),
+                            'double' => __('Double'),
+                            'suite' => __('Suite'),
+                        };
+                    })
+                    ->label(__('Room Type')),
 
                 TextColumn::make('total_price')
                     ->money('EGP')
@@ -189,7 +207,7 @@ class OrderResource extends Resource
 
                 ]),
             ]);
-     
+
     }
 
 

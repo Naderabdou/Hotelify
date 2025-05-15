@@ -30,6 +30,10 @@ class BookingService
                 'start_date'  => $data['start_date'],
                 'end_date'    => $data['end_date'],
                 'total_price' => $totalPrice,
+                'room_type' => $room->type,
+                'room_number' => $room->number,
+                'customer_name' => $user->name,
+                'customer_email' => $user->email,
             ]);
         });
 
