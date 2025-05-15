@@ -9,7 +9,7 @@ use App\Http\Resources\UserResource;
 use App\Http\Requests\API\LoginRequest;
 use App\Http\Requests\API\RegisterRequest;
 use App\Http\Controllers\API\Traits\ApiResponseTrait;
-
+use Illuminate\Support\Facades\RateLimiter;
 class UserController extends Controller
 {
     use ApiResponseTrait;
@@ -20,6 +20,10 @@ class UserController extends Controller
 
         $credentials = $request->only('email', 'password');
 
+
+
+
+
         if (!auth()->attempt($credentials)) {
             return $this->ApiResponse(null, __('بيانات الدخول غير صحيحة'), 401);
         }
@@ -27,6 +31,7 @@ class UserController extends Controller
         $user = auth()->user();
 
         $token = $user->createToken('auth_token')->plainTextToken;
+        RateLimiter::clear('login-attempts:' . $request->ip() . ':' . $request->email);
 
         return $this->ApiResponse(
             [
@@ -69,5 +74,23 @@ class UserController extends Controller
         $user = auth()->user();
         $user->tokens()->delete();
         return $this->ApiResponse(null, __('User logged out successfully'));
+    }
+
+
+    private function RateLimiter($key = null)
+    {
+        $maxAttempts = 5;
+        $decaySeconds = 60;
+
+        if (RateLimiter::tooManyAttempts($key, $maxAttempts)) {
+            $seconds = RateLimiter::availableIn($key);
+            return $this->ApiResponse(
+                null,
+                __('Too many login attempts. Please try again in :seconds seconds.', ['seconds' => $seconds]),
+                429
+            );
+        }
+
+        RateLimiter::hit($key, $decaySeconds);
     }
 }

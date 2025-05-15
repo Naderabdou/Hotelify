@@ -1248,6 +1248,7 @@
     "Count Reservation": "عدد ايام الحجز",
     "Days": "ايام",
     "Nights": "ليالي",
-    "Night" : "ليلة"
+    "Night" : "ليلة",
+    "Too many login attempts. Please try again in :seconds seconds.": "عدد محاولات تسجيل الدخول كثيرة جدًا. يرجى المحاولة مرة أخرى بعد :seconds ثواني."
 
 }

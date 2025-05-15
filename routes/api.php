@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\RoomController;
+use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\BookingController;
 
 
@@ -10,8 +11,8 @@ use App\Http\Controllers\API\BookingController;
 Route::middleware('localization')->namespace('API')->group(function () {
 
     // ===========================Auth routes=========================== //
-    Route::post('login', 'UserController@login');
-    Route::post('register', 'UserController@register');
+    Route::post('login', [UserController::class, 'login'])->middleware('login.throttle');
+    Route::post('register', [UserController::class , 'register']);
     // ===========================End Auth routes=========================== //
 
 
@@ -28,7 +29,8 @@ Route::middleware('localization')->namespace('API')->group(function () {
         // ===========================End Booking routes=========================== //
 
         // =========================== Logout routes =========================== //
-        Route::post('logout', 'UserController@logout');
+        Route::post('logout', [UserController::class, 'logout']);
+
         // =========================== End Logout routes =========================== //
 
     });

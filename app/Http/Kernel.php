@@ -68,6 +68,9 @@ class Kernel extends HttpKernel
         'lang' => \App\Http\Middleware\Lang::class,
         'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
         'checkRole' => \App\Http\Middleware\CheckRole::class,
+        'customThrottle' => \App\Http\Middleware\CustomThrottleRequests::class,
+        'login.throttle' => \App\Http\Middleware\LoginThrottle::class,
+
 
 
 
